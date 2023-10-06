@@ -16,9 +16,14 @@
 			$.ajax({
         	    type: "GET",
         	    url: "http://localhost:3000/user/profile",
-        	    headers: { 'Authorization': "Bearer "+auth },
+				headers: { 'Authorization': "Bearer "+auth },
         	    success: function (result) {
-        	        window.location.replace("pages/home.html");
+					const data= JSON.stringify(result);
+                	var json = JSON.parse(data);
+                	const username = json["username"];
+					const email = json["email"];
+					const avatar = json["avatar"];
+					document.getElementById("nameTv").innerHTML=username;
         	    },
         	    error: function(jqXHR, textStatus, errorThrown) {
         	        alert(errorThrown);

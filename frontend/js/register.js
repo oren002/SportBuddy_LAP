@@ -13,7 +13,7 @@ function createAccount() {
             data: JSON.stringify({ "username": username, "email" : email, "password" : psw, "avatar" : "" }),
             contentType: "application/json",
             success: function (result) {
-                window.location.replace("home.html");
+                window.location.replace("/frontend");
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert(JSON.stringify(jqXHR));

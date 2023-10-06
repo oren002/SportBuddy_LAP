@@ -12,13 +12,14 @@ function login() {
             data: JSON.stringify({ "username": user, "password" : psw }),
             contentType: "application/json",
             success: function (result) { 
-                //var json = JSON.parse(result);
-                //const token = json["token"];
-                //document.cookie = `auth=${token}`;
+                const t = JSON.stringify(result);
+                var json = JSON.parse(t);
+                const token = json["token"];
+                document.cookie = 'auth='+token+'; max-age=3600; path=/';
                 window.location.replace("pages/home.html");
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('Wrong username or password');
+                alert(errorThrown);
             }
           });
 
