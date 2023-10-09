@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./mongoDB/db');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const activityRoutes = require('./routes/activity');
 const cors = require("cors");
 
 const app = express();
@@ -14,10 +15,11 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
-// Define authentication routes
+// Define routes
 app.use('/auth', authRoutes);
+app.use('/activity', activityRoutes);
 
-// Define user routes (middleware)
+// Define routes (middleware)
 app.use('/user', userRoutes);
 
 // Start the server

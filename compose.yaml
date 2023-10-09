@@ -6,11 +6,11 @@ services:
       - 8000:80
     stdin_open: true
     volumes:
-      - ./frontend:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./frontend:/app
+      - /app/node_modules
     restart: always
     networks:
-      - static-express
+      - react-express
     depends_on:
       - backend
 
@@ -21,13 +21,13 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./backend:/app
+      - /app/node_modules
     depends_on:
       - mongo
     networks:
       - express-mongo
-      - static-express
+      - react-express
     expose: 
       - 3000
 
@@ -42,5 +42,5 @@ services:
       - 27017
 
 networks:
-  static-express:
+  react-express:
   express-mongo:
