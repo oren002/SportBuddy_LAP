@@ -209,11 +209,11 @@ const Landing = () => {
                                 <ul className="list-unstyled li-space-lg">
                                     <li className="media">
                                         <i className="far fa-check-square"></i>
-                                        <div className="media-body">Spec 1</div>
+                                        <div className="media-body">All the activities you join are easly managable through your own Agenda</div>
                                     </li>
                                     <li className="media">
                                         <i className="far fa-check-square"></i>
-                                        <div className="media-body">Spec 2</div>
+                                        <div className="media-body">No more frustrations of having to personally gather people for your Events; SportBuddy takes care of everything</div>
                                     </li>
                                 </ul>
                             </div>

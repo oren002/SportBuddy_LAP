@@ -1,18 +1,10 @@
 import React from "react";
 import $ from 'jquery';
 import { useEffect } from 'react';
-import {useNavigate} from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import ActivityCard from "../components/ActivityCard";
 
 export default function Home() {
-
-    const navigate = useNavigate();
-
-    function logout() {
-        document.cookie = 'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        navigate('/');
-    }
 
     useEffect(() => {
         var preloaderFadeOutTime = 500;

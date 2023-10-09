@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+
 
 function Navbar() {
+
+  const navigate = useNavigate();
+
+    function logout() {
+        document.cookie = 'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        navigate('/');
+    }
 
     function saveUser() {
         var user = document.getElementById("nameTv").innerHTML;
@@ -35,6 +44,9 @@ function Navbar() {
 
           <div className="collapse navbar-collapse" id="navbarsExampleDefault">
               <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                    <Link className="nav-link page-scroll mt-2" to="/home">HOME</Link>
+                  </li>
                   <li className="nav-item">
                     <Link className="nav-link page-scroll mt-2" to="/pastActivities">PAST ACTIVITIES</Link>
                   </li>
@@ -52,6 +64,9 @@ function Navbar() {
                   </li>
                   <span className="nav-item">
                     <Link className="btn-outline-sm page-scroll" onClick={saveUser} to="/createActivity">+</Link>
+                  </span>
+                  <span className="nav-item">
+                    <button className="btn btn-primary" onClick={logout}>LOGOUT</button>
                   </span>
               </ul>
           </div>
