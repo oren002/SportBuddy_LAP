@@ -1,10 +1,12 @@
 import React from "react";
 import $ from 'jquery';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from "../components/Navbar";
 import ActivityCard from "../components/ActivityCard";
 
 export default function Home() {
+
+    const [items, setItems] = useState();
 
     useEffect(() => {
         var preloaderFadeOutTime = 500;
@@ -17,6 +19,7 @@ export default function Home() {
 	    	hidePreloader();
 	    	let auth = getCookie("auth");
             function getCookie(cName) {
+                // if cookie is expired, then => navigate('/');
                 const name = cName + "=";
                 const cDecoded = decodeURIComponent(document.cookie); //to be careful
                 const cArr = cDecoded.split('; ');
@@ -38,6 +41,18 @@ export default function Home() {
 	    				const email = json["email"];
 	    				const avatar = json["avatar"];
 	    				document.getElementById("nameTv").innerHTML=username;
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost:3000/activity/agenda",
+                            data: JSON.stringify({ "username": username }),
+                            contentType: "application/json",
+                            success: function (result) {
+                                setItems(result);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                alert(errorThrown);
+                            }
+                          });
             	    },
             	    error: function(jqXHR, textStatus, errorThrown) {
             	        alert(errorThrown);
@@ -79,7 +94,7 @@ export default function Home() {
         </div> 
     </header> 
 
-        <ActivityCard />
+         {items && <ActivityCard items={items}/>}
 
     </div>
     );
