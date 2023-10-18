@@ -9,7 +9,32 @@ const getAgenda = async (req, res, next) => {
     }
 
     try {
-      const activities = await Activity.find({ creator: { $nin: [username] } });
+      const activities = await Activity.find({ creator: { $nin: [username] }, participants: { $in: [username] } });
+      if (!activities) {
+        return res.status(404).json({ message: 'No Activity found' });
+      }
+
+    req.items = activities;
+    next();
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  const searchActivities = async (req, res, next) => {
+    console.log("searching activities");
+    const { username, location } = req.body;
+
+    if (!username) {
+      return res.status(401).json({ message: 'Error in loading Activities' });
+    }
+
+    if (location!="") {
+      // filter by location
+    }
+
+    try {
+      const activities = await Activity.find({ creator: { $nin: [username] }, participants: { $nin: [username] }  });
       if (!activities) {
         return res.status(404).json({ message: 'No Activity found' });
       }
@@ -21,4 +46,4 @@ const getAgenda = async (req, res, next) => {
     }
   };
   
-  module.exports = { getAgenda };
+  module.exports = { getAgenda, searchActivities };

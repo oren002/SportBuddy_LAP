@@ -3,9 +3,11 @@ import $ from 'jquery';
 import { useState, useEffect } from 'react';
 import Navbar from "../components/Navbar";
 import ActivityCard from "../components/ActivityCard";
+import {useNavigate} from 'react-router-dom';
 
 export default function Home() {
 
+    const navigate = useNavigate();
     const [items, setItems] = useState();
 
     useEffect(() => {
@@ -19,7 +21,6 @@ export default function Home() {
 	    	hidePreloader();
 	    	let auth = getCookie("auth");
             function getCookie(cName) {
-                // if cookie is expired, then => navigate('/');
                 const name = cName + "=";
                 const cDecoded = decodeURIComponent(document.cookie); //to be careful
                 const cArr = cDecoded.split('; ');
@@ -58,7 +59,7 @@ export default function Home() {
             	        alert(errorThrown);
             	    }
             	  });
-	    	}
+	    	} else navigate('/');
      }, []);
 
     return (
@@ -94,7 +95,7 @@ export default function Home() {
         </div> 
     </header> 
 
-         {items && <ActivityCard items={items}/>}
+         {items && <ActivityCard items={items} type="home" />}
 
     </div>
     );

@@ -1,9 +1,14 @@
 import React from 'react';
 import Navbar from "../components/Navbar";
+import ActivityCard from "../components/ActivityCard";
 import $ from 'jquery';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
  
 const SearchActivities = () => {
+
+    const navigate = useNavigate();
+    const [items, setItems] = useState();
 
     useEffect(() => {
         var preloaderFadeOutTime = 500;
@@ -37,12 +42,24 @@ const SearchActivities = () => {
 	    				const email = json["email"];
 	    				const avatar = json["avatar"];
 	    				document.getElementById("nameTv").innerHTML=username;
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost:3000/activity/search",
+                            data: JSON.stringify({ "username": username, "location": ""}),
+                            contentType: "application/json",
+                            success: function (result) {
+                                setItems(result);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                alert(errorThrown);
+                            }
+                          });
             	    },
             	    error: function(jqXHR, textStatus, errorThrown) {
             	        alert(errorThrown);
             	    }
             	  });
-	    	}
+	    	} else navigate('/');
       }, []);
 
     return (
@@ -76,7 +93,9 @@ const SearchActivities = () => {
         <div className="deco-green-diamond">
             <img src="../images/decorative-green-diamond.svg" alt="alternative" />
         </div> 
-    </header> 
+    </header>
+
+    {items && <ActivityCard items={items} type="search" />}
 
     </div>
     );

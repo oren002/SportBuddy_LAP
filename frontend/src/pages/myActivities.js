@@ -42,7 +42,7 @@ const MyActivities = () => {
             	        alert(errorThrown);
             	    }
             	  });
-	    	}
+	    	} else navigate('/');
       }, []);
 
     return (

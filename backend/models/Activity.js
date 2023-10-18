@@ -25,10 +25,15 @@ const activitySchema = new mongoose.Schema({
     type: String, //Mixed
     required: true,
   },
-  participants: {
+  participants_number: {
     type: Number,
     required: true,
     default: 0,
+  },
+  participants: {
+    type: [String],
+    required: true,
+    default: [],
   },
   tot_participants: {
     type: Number,

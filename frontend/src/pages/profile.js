@@ -42,7 +42,7 @@ const Profile = () => {
             	        alert(errorThrown);
             	    }
             	  });
-	    	}
+	    	} else navigate('/');
       }, []);
 
     return (
