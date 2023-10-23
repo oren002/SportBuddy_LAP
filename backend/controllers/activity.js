@@ -37,4 +37,16 @@ const forfeitActivity = async (req, res, next) => {
     }
   };
 
-module.exports = { createActivity, joinActivity, forfeitActivity };
+const cancelActivity = async (req, res, next) => {
+    console.log("canceling Activity");
+    const { id } = req.body;
+
+    try {
+        await Activity.deleteOne( { _id: id } );
+        res.json({ message: 'Activity canceled' });
+    } catch (error) {
+        next(error);
+    }
+  };
+
+module.exports = { createActivity, joinActivity, forfeitActivity, cancelActivity };

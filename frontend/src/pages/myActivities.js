@@ -1,9 +1,14 @@
 import React from 'react';
 import Navbar from "../components/Navbar";
 import $ from 'jquery';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import ActivityCard from "../components/ActivityCard";
+import {useNavigate} from 'react-router-dom';
  
 const MyActivities = () => {
+
+    const navigate = useNavigate();
+    const [items, setItems] = useState();
 
     useEffect(() => {
         var preloaderFadeOutTime = 500;
@@ -37,6 +42,18 @@ const MyActivities = () => {
 	    				const email = json["email"];
 	    				const avatar = json["avatar"];
 	    				document.getElementById("nameTv").innerHTML=username;
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost:3000/activity/myact",
+                            data: JSON.stringify({ "username": username }),
+                            contentType: "application/json",
+                            success: function (result) {
+                                setItems(result);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                alert(errorThrown);
+                            }
+                          });
             	    },
             	    error: function(jqXHR, textStatus, errorThrown) {
             	        alert(errorThrown);
@@ -77,6 +94,8 @@ const MyActivities = () => {
             <img src="../images/decorative-green-diamond.svg" alt="alternative" />
         </div> 
     </header> 
+
+        {items && <ActivityCard items={items} type="my" />}
 
     </div>
     );

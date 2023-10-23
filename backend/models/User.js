@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongodb');
 
 const userSchema = new mongoose.Schema(
   {
@@ -21,6 +22,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
       unique: false
+    },
+    Favorites: {
+      type: [ObjectId],
+      required: true,
+      default: []
     }
   },
   { timestamps: true }

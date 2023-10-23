@@ -174,3 +174,17 @@
 	right: 30px;
 	letter-spacing: 1px;
 }
+.btn_styled {
+	background-color: #e0cb07;
+	border: 0;
+	outline: none;
+	border-radius: 50px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	font-size: 16px;
+	padding: 12px 25px;
+	position: absolute;
+	left: 20px;
+	right: 550px;
+	letter-spacing: 1px;
+  }
