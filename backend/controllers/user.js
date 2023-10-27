@@ -12,4 +12,16 @@ const addToFavorites = async (req, res, next) => {
   }
 };
 
-module.exports = { addToFavorites };
+const removeFromFavorites = async (req, res, next) => {
+  console.log("removingfromfavourites");
+  const { username, id } = req.body;
+
+  try {
+    await User.updateOne({ username: username }, { $pull: { Favorites: id } });
+    res.json({ message: 'Activity removed from favorites' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { addToFavorites,removeFromFavorites };

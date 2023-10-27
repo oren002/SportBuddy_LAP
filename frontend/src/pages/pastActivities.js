@@ -1,9 +1,15 @@
 import React from 'react';
 import Navbar from "../components/Navbar";
 import $ from 'jquery';
-import { useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import ActivityCard from "../components/ActivityCard";
+
  
 const PastActivities = () => {
+
+    const navigate = useNavigate();
+    const [items, setItems] = useState();
 
     useEffect(() => {
         var preloaderFadeOutTime = 500;
@@ -37,9 +43,21 @@ const PastActivities = () => {
 	    				const email = json["email"];
 	    				const avatar = json["avatar"];
 	    				document.getElementById("nameTv").innerHTML=username;
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost:3000/activity/pastact",
+                            data: JSON.stringify({ "username": username }),
+                            contentType: "application/json",
+                            success: function (result) {
+                                setItems(result);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                //alert(errorThrown);
+                            }
+                          });
             	    },
             	    error: function(jqXHR, textStatus, errorThrown) {
-            	        alert(errorThrown);
+            	        //alert(errorThrown);
             	    }
             	  });
 	    	} else navigate('/');
@@ -56,7 +74,7 @@ const PastActivities = () => {
                 <div className="col-lg-12">
                     <div className="text-container">
                         <h1>Past Activities</h1>
-                        <p className="p-large p-heading">These are your </p>
+                        <p className="p-large p-heading">These are your past activities! From here, you can leave a review! </p>
                     </div> 
                 </div>
             </div>
@@ -77,9 +95,11 @@ const PastActivities = () => {
             <img src="../images/decorative-green-diamond.svg" alt="alternative" />
         </div> 
     </header> 
-
+        {items && <ActivityCard items={items} type="past"/>}
     </div>
     );
+
+    
 };
  
 export default PastActivities;

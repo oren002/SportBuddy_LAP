@@ -5,6 +5,8 @@ import {useNavigate} from 'react-router-dom';
 
 function Navbar() {
 
+ 
+
   const navigate = useNavigate();
 
     function logout() {
@@ -54,7 +56,7 @@ function Navbar() {
                     <Link className="nav-link page-scroll mt-2" to="/myActivities">MY ACTIVITIES</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link page-scroll mt-2" to="/searchActivities">SERACH ACTIVITIES</Link>
+                    <Link className="nav-link page-scroll mt-2" to="/searchActivities">SEARCH ACTIVITIES</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link page-scroll mt-2" to="/profile">PROFILE</Link>
@@ -74,6 +76,8 @@ function Navbar() {
     </nav>
   </div>
   );
+
+  
 }
 
 export default Navbar;

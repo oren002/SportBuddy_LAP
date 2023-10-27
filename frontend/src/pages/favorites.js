@@ -1,9 +1,14 @@
 import React from 'react';
 import Navbar from "../components/Navbar";
 import $ from 'jquery';
-import { useEffect } from 'react';
+import { useState,useEffect } from 'react';
+import ActivityCard from "../components/ActivityCard";
+import {useNavigate} from 'react-router-dom';
  
 const Favorites = () => {
+
+    const navigate = useNavigate();
+    const [items, setItems] = useState();
 
     useEffect(() => {
         var preloaderFadeOutTime = 500;
@@ -37,12 +42,26 @@ const Favorites = () => {
 	    				const email = json["email"];
 	    				const avatar = json["avatar"];
 	    				document.getElementById("nameTv").innerHTML=username;
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost:3000/activity/favact",
+                            data: JSON.stringify({ "username": username }),
+                            contentType: "application/json",
+                            success: function (result) {
+                                setItems(result);
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                //alert(errorThrown);
+                            }
+                          });
+                          console.log(items || []);
             	    },
             	    error: function(jqXHR, textStatus, errorThrown) {
-            	        alert(errorThrown);
+            	        //alert(errorThrown);
             	    }
             	  });
-	    	}
+	    	} else navigate('/'); 
       }, []);
 
     return (
@@ -56,7 +75,7 @@ const Favorites = () => {
                 <div className="col-lg-12">
                     <div className="text-container">
                         <h1>Favorites</h1>
-                        <p className="p-large p-heading">These are your </p>
+                        <p className="p-large p-heading">These are your favorites activities!</p>
                     </div> 
                 </div>
             </div>
@@ -78,6 +97,7 @@ const Favorites = () => {
         </div> 
     </header> 
 
+        {items && <ActivityCard items={items} type="fav" />}
     </div>
     );
 };

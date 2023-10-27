@@ -2,8 +2,11 @@ import React from 'react';
 import Navbar from "../components/Navbar";
 import $ from 'jquery';
 import { useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
  
 const Profile = () => {
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         var preloaderFadeOutTime = 500;

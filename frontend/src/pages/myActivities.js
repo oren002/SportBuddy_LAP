@@ -73,7 +73,7 @@ const MyActivities = () => {
                 <div className="col-lg-12">
                     <div className="text-container">
                         <h1>My Activities</h1>
-                        <p className="p-large p-heading">These are your </p>
+                        <p className="p-large p-heading">These are your activities! </p>
                     </div> 
                 </div>
             </div>
