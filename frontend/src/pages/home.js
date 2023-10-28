@@ -41,6 +41,16 @@ export default function Home() {
                     	const username = json["username"];
 	    				const email = json["email"];
 	    				const avatar = json["avatar"];
+                        const reviews = json["reviews"];
+                        var i; var tot=0;
+                        for (i=0; i<reviews.length; i++) {
+                            tot += reviews[i]["rate"];
+                        }
+                        const mean = Math.floor(tot/reviews.length);
+                        var j;
+                        for (j=1; j<=mean; j++) {
+                            document.getElementById(j).className += " checked";
+                        }
 	    				document.getElementById("nameTv").innerHTML=username;
                         $.ajax({
                             type: "POST",
@@ -51,12 +61,12 @@ export default function Home() {
                                 setItems(result);
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
+                                //alert(errorThrown);
                             }
                           });
             	    },
             	    error: function(jqXHR, textStatus, errorThrown) {
-            	        alert(errorThrown);
+            	        //alert(errorThrown);
             	    }
             	  });
 	    	} else navigate('/');

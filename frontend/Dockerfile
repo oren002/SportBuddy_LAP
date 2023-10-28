@@ -10,5 +10,6 @@ COPY package.json /app/
 
 RUN npm install
 RUN npm install jquery
+RUN npm install react-rating
 
 CMD ["npm", "start"]

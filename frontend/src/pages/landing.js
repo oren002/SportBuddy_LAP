@@ -84,7 +84,7 @@ const Landing = () => {
   
     <nav className="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
         <div className="container">
-            <a className="navbar-brand logo-text page-scroll" href="index.html">SportBuddy</a> 
+            <a className="navbar-brand logo-text page-scroll" href="index.html">SportPlanner</a> 
             
           
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">

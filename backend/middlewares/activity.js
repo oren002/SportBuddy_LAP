@@ -5,12 +5,14 @@ const getAgenda = async (req, res, next) => {
     console.log("getting agenda");
     const { username } = req.body;
 
+    const currentDate = new Date();
+
     if (!username) {
       return res.status(401).json({ message: 'Error in loading Activities' });
     }
 
     try {
-      const activities = await Activity.find({ creator: { $nin: [username] }, participants: { $in: [username] } });
+      const activities = await Activity.find({ creator: { $nin: [username] }, participants: { $in: [username] }, date: { $gte: currentDate.toISOString() } });
       if (!activities) {
         return res.status(404).json({ message: 'No Activity found' });
       }
@@ -26,6 +28,8 @@ const getAgenda = async (req, res, next) => {
     console.log("searching activities");
     const { username, location } = req.body;
 
+    const currentDate = new Date();
+
     if (!username) {
       return res.status(401).json({ message: 'Error in loading Activities' });
     }
@@ -35,7 +39,7 @@ const getAgenda = async (req, res, next) => {
     }
 
     try {
-      const activities = await Activity.find({ creator: { $nin: [username] }, participants: { $nin: [username] }  });
+      const activities = await Activity.find({ creator: { $nin: [username] }, participants: { $nin: [username] }, date: { $gte: currentDate.toISOString() } });
       if (!activities) {
         return res.status(404).json({ message: 'No Activity found' });
       }

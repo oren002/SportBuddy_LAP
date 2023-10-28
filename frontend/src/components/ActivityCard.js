@@ -4,7 +4,6 @@ import $ from 'jquery';
 import Favorites from '../pages/favorites';
 import Rating from 'react-rating';
 
-
 function ActivityCard({items, type}) {
 
     if(type=="search") {
@@ -28,8 +27,25 @@ function ActivityCard({items, type}) {
                           <span className='progress-text'>{item.participants_number} / {item.tot_participants} </span>
                       </div>
                       <h6>{item.date.substring(0, 10)}, {item.time} </h6>
-                      <h2>{item.location}, {item.price}  </h2>
-                    <button
+                      <h2>{item.location}, {item.price+"€"}  </h2>
+                    <button onLoad={$.ajax({
+                            type: "POST",
+                            url: "http://localhost:3000/user/isInFav",
+                            data: JSON.stringify({ "username": document.getElementById("nameTv").innerHTML, "id": item._id}),
+                            contentType: "application/json",
+                            success: function (result) {
+                              const data = JSON.stringify(result);
+                              var json = JSON.parse(data);
+                              const message = json["message"];
+                              if (message=="yes") {
+                                document.getElementById(`addToFavBtn_${item._id}`).style.display = "none";
+                                document.getElementById(`removeFromFavBtn_${item._id}`).style.display = "inline-block";
+                              }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                //alert(errorThrown);
+                            }
+                          })}
                       className="btn btn_styled"
                       id={`addToFavBtn_${item._id}`}
                       onClick={() =>
@@ -138,7 +154,7 @@ function ActivityCard({items, type}) {
                           <span className='progress-text'>{item.participants_number} / {item.tot_participants} </span>
                       </div>
                       <h6>{item.date.substring(0, 10)}, {item.time} </h6>
-                      <h2>{item.location}, {item.price}  </h2>
+                      <h2>{item.location}, {item.price+"€"}  </h2>
                       
                       <button className='btn' onClick={()=>
                         $.ajax({
@@ -182,7 +198,7 @@ function ActivityCard({items, type}) {
                           <span className='progress-text'>{item.participants_number} / {item.tot_participants} </span>
                       </div>
                       <h6>{item.date.substring(0, 10)}, {item.time} </h6>
-                      <h2>{item.location}, {item.price}  </h2>
+                      <h2>{item.location}, {item.price+"€"}  </h2>
                       <button className='btn' onClick={()=>
                         $.ajax({
                             type: "POST",
@@ -225,7 +241,7 @@ function ActivityCard({items, type}) {
                           <span className='progress-text'>{item.participants_number} / {item.tot_participants} </span>
                       </div>
                       <h6>{item.date.substring(0, 10)}, {item.time} </h6>
-                      <h2>{item.location}, {item.price}  </h2>
+                      <h2>{item.location}, {item.price+"€"}  </h2>
                       <button class="btn btn_styled" onClick={()=>
                         $.ajax({
                             type: "POST",
@@ -264,6 +280,7 @@ function ActivityCard({items, type}) {
     }
 
     else if (type === "past") {
+
         return (
           <ul>
             {items.map(item => (
@@ -274,7 +291,7 @@ function ActivityCard({items, type}) {
                       <h6>{item.name}</h6>
                       <h2>{item.creator}</h2>
                       <i
-                        onClick={() => document.getElementById(item._id).toggleAttribute("hidden")}
+                        onClick={() => {document.getElementById(item._id).toggleAttribute("hidden")}}
                         className='fas fa-chevron-right'
                       >
                         <p id={item._id} hidden="true">{item.description}</p>
@@ -286,15 +303,49 @@ function ActivityCard({items, type}) {
                         <span className='progress-text'>{item.participants_number} / {item.tot_participants} </span>
                       </div>
                       <h6>{item.date.substring(0, 10)}, {item.time} </h6>
-                      <h2>{item.location}, {item.price}  </h2>
-                      <Rating
-                        initialRating={item.rating} // Set the initial rating value from your data
+                      <h2>{item.location}, {item.price+"€"}  </h2>
+                      <Rating onHover={()=>{$.ajax({
+                        type: "POST",
+                        url: "http://localhost:3000/user/rev",
+                        data: JSON.stringify({ "name": document.getElementById("nameTv").innerHTML, "creator": item.creator }),
+                        contentType: "application/json",
+                        success: function (result) {
+                          const data= JSON.stringify(result);
+                          var json= JSON.parse(data);
+                          const reviews = json["reviews"];
+                          var index = reviews.findIndex(function(item, i){
+                            return item.user === document.getElementById("nameTv").innerHTML;
+                          });
+                          if(index >= 0) {
+                            const rate = reviews[index]["rate"];
+                            document.getElementById(`rating_${item._id}`).innerHTML = " You rated "+item.creator+" "+rate+" stars";
+                          } 
+                          },
+                          error: function(jqXHR, textStatus, errorThrown) {
+                            alert(errorThrown);
+                          }
+                        })}}
                         emptySymbol={<i className="far fa-star"></i>}
                         fullSymbol={<i className="fas fa-star" style={{ color: 'orange' }}></i>}
-                        onChange={newRating =>
-                          console.log(`User clicked the ${newRating} star(s) for activity with id ${item._id}`)
+                        onChange={newRating => {
+                          console.log(`User clicked the ${newRating} star(s) for activity with id ${item._id}`);
+                          $.ajax({
+                            type: "POST",
+                            url: "http://localhost:3000/user/rate",
+                            data: JSON.stringify({ "username": document.getElementById("nameTv").innerHTML, "creator": item.creator, "rating": newRating }),
+                            contentType: "application/json",
+                            success: function (result) {
+                                //alert("done");
+                                document.getElementById(`rating_${item._id}`).innerHTML = " You rated "+item.creator+" "+newRating+" stars";
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                alert(errorThrown);
+                            }
+                          })
+                        }     
                         }
                       />
+                      <span id ={`rating_${item._id}`} ></span>
                     </div>
                   </div>
                 </div>

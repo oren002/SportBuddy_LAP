@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema(
       type: [ObjectId],
       required: true,
       default: []
+    },
+    reviews: {
+      type: [{ rate: Number, user: String }],
+      default: []
     }
   },
   { timestamps: true }

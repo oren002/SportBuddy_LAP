@@ -1,12 +1,13 @@
 import React from 'react';
 import Navbar from "../components/Navbar";
 import $ from 'jquery';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
  
 const Profile = () => {
 
     const navigate = useNavigate();
+    const [selectedImage, setSelectedImage] = useState();
 
     useEffect(() => {
         var preloaderFadeOutTime = 500;
@@ -39,10 +40,20 @@ const Profile = () => {
                     	const username = json["username"];
 	    				const email = json["email"];
 	    				const avatar = json["avatar"];
+                        const reviews = json["reviews"];
+                        var i; var tot=0;
+                        for (i=0; i<reviews.length; i++) {
+                            tot += reviews[i]["rate"];
+                        }
+                        const mean = Math.floor(tot/reviews.length);
+                        var j;
+                        for (j=1; j<=mean; j++) {
+                            document.getElementById(j).className += " checked";
+                        }
 	    				document.getElementById("nameTv").innerHTML=username;
             	    },
             	    error: function(jqXHR, textStatus, errorThrown) {
-            	        alert(errorThrown);
+            	        //alert(errorThrown);
             	    }
             	  });
 	    	} else navigate('/');
@@ -59,7 +70,7 @@ const Profile = () => {
                 <div className="col-lg-12">
                     <div className="text-container">
                         <h1>Profile</h1>
-                        <p className="p-large p-heading">This is your profile</p>
+                        <p className="p-large p-heading">Here you can change you Avatar!</p>
                     </div> 
                 </div>
             </div>
@@ -80,7 +91,33 @@ const Profile = () => {
             <img src="../images/decorative-green-diamond.svg" alt="alternative" />
         </div> 
     </header> 
+    <div className="container center">
+    <h5>Upload ypur new Avatar</h5>
 
+      {selectedImage && (
+        <div>
+          <img
+            alt="not found"
+            width={"250px"}
+            src={URL.createObjectURL(selectedImage)}
+          />
+          <br />
+          <button onClick={()=>{}} id="sub" className='btn btn_join'>Submit</button>
+        </div>
+      )}
+
+      <br />
+      <br />
+      
+      <input
+        type="file"
+        name="myImage"
+        onChange={(event) => {
+          console.log(event.target.files[0]);
+          setSelectedImage(event.target.files[0]);
+        }}
+      />
+    </div>
     </div>
     );
 };
