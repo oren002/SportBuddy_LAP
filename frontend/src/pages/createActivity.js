@@ -1,13 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
 import {useNavigate} from 'react-router-dom';
+import { useEffect,useState } from 'react';
+
  
 const CreateActivity = () => {
 
     const navigate = useNavigate();
 
     function publishEvent() {
-
         var creator = localStorage.getItem("username");
         var date = document.getElementById("ev-date").value;
         var time = document.getElementById("ev-time").value;
@@ -74,10 +75,11 @@ const CreateActivity = () => {
           <p>Price (in euros) </p>
           <input id="ev-price" className="form-control" type="number" name="name"/>
           </div>
-        <div className="mt-5 btn-block">
+        
+      </div>
+      <div className="mt-5 btn-block">
           <button className="btn btn-primary" onClick={publishEvent}>PUBLISH</button>
         </div>
-      </div>
     </div>
     </div>
     </div>

@@ -40,21 +40,50 @@
     <script src="js/jquery.magnific-popup.js"></script>
     <script src="js/validator.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script defer src="https://widget-js.cometchat.io/v3/cometchatwidget.js"></script>
 
-    <title>React App</title>
+
+    <title>Sport-Planner</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <script>
+      if(!window.location.href.includes("createActivity")){     
+      window.addEventListener('DOMContentLoaded', (event) => {
+        CometChatWidget.init({
+          "appID": "2475861500026de3",
+          "appRegion": "eu",
+          "authKey": "1512546c0a6d9ca2b2c311637b69549e8d63b481"
+        }).then(response => {
+          console.log("Initialization completed successfully");
+          //You can now call login function.
+          const username = window.localStorage.getItem('exportedUsername');
+          CometChatWidget.login({
+            "uid": username
+            
+          }).then(response => {
+            CometChatWidget.launch({
+              "widgetID": "a8a629b3-95e1-4611-a9c8-4900f01fbb5b",
+              "docked": "true",
+              "alignment": "left", //left or right
+              "roundedCorners": "true",
+              "height": "450px",
+              "width": "400px",
+              "defaultID": 'user', //default UID (user) or GUID (group) to show,
+              "defaultType": 'user' //user or group
+            });
+          }, error => {
+            console.log("User login failed with error:", error);
+            //Check the reason for error and take appropriate action.
+          });
+        }, error => {
+          console.log("Initialization failed with error:", error);
+          //Check the reason for error and take appropriate action.
+        });
+      });
+      }
+      </script>
   </body>
 </html>

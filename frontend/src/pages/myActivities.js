@@ -48,9 +48,11 @@ const MyActivities = () => {
                         }
                         const mean = Math.floor(tot/reviews.length);
                         var j;
+                        try{
                         for (j=1; j<=mean; j++) {
                             document.getElementById(j).className += " checked";
                         }
+                    }catch{console.log("oooo");}
 	    				document.getElementById("nameTv").innerHTML=username;
                         $.ajax({
                             type: "POST",
@@ -62,11 +64,13 @@ const MyActivities = () => {
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 //alert(errorThrown);
+                                console.log("eee");
                             }
                           });
             	    },
             	    error: function(jqXHR, textStatus, errorThrown) {
             	        //alert(errorThrown);
+                        console.log("eee");
             	    }
             	  });
 	    	} else navigate('/');

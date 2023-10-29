@@ -37,13 +37,16 @@ function ActivityCard({items, type}) {
                               const data = JSON.stringify(result);
                               var json = JSON.parse(data);
                               const message = json["message"];
+                            try{
                               if (message=="yes") {
                                 document.getElementById(`addToFavBtn_${item._id}`).style.display = "none";
                                 document.getElementById(`removeFromFavBtn_${item._id}`).style.display = "inline-block";
                               }
+                            }catch{console.log("ccccc");}
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 //alert(errorThrown);
+                                console.log("o");
                             }
                           })}
                       className="btn btn_styled"
@@ -69,7 +72,8 @@ function ActivityCard({items, type}) {
                             }
                           },
                           error: function (jqXHR, textStatus, errorThrown) {
-                            alert(errorThrown);
+                            //alert(errorThrown);
+                            console.log("ooo");
                           },
                         })
                       }
@@ -102,7 +106,8 @@ function ActivityCard({items, type}) {
                             }
                           },
                           error: function (jqXHR, textStatus, errorThrown) {
-                            alert(errorThrown);
+                            //alert(errorThrown);
+                            console.log("oo");
                           },
                         })
                       }
@@ -121,7 +126,8 @@ function ActivityCard({items, type}) {
                                 window.location.reload(false);
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
+                              console.log("oo");  
+                              //alert(errorThrown);
                             }
                           })
                     }>Join</button>
@@ -166,7 +172,8 @@ function ActivityCard({items, type}) {
                                 window.location.reload(false);
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
+                                console.log("oo");  
+                              //alert(errorThrown);
                             }
                           })}>Forfeit</button>
                   </div>
@@ -209,7 +216,8 @@ function ActivityCard({items, type}) {
                                 window.location.reload(false);
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
+                              console.log("oo");  
+                              //alert(errorThrown);
                             }
                           })}>Cancel</button>
                   </div>
@@ -253,7 +261,8 @@ function ActivityCard({items, type}) {
                                 window.location.reload();
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
+                                //alert(errorThrown);
+                                console.log("oo");
                             }
                           })}> Remove from favorites</button>
                       <button className='btn_join' onClick={()=>
@@ -266,7 +275,8 @@ function ActivityCard({items, type}) {
                                 window.location.reload(false);
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
+                                //alert(errorThrown);
+                                console.log("oo");
                             }
                           })
                     }>Join</button>
@@ -322,7 +332,8 @@ function ActivityCard({items, type}) {
                           } 
                           },
                           error: function(jqXHR, textStatus, errorThrown) {
-                            alert(errorThrown);
+                            console.log("oo");
+                            //alert(errorThrown);
                           }
                         })}}
                         emptySymbol={<i className="far fa-star"></i>}
@@ -339,7 +350,8 @@ function ActivityCard({items, type}) {
                                 document.getElementById(`rating_${item._id}`).innerHTML = " You rated "+item.creator+" "+newRating+" stars";
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
+                              console.log("oo");  
+                              //alert(errorThrown);
                             }
                           })
                         }     

@@ -7,6 +7,7 @@ import {useNavigate} from 'react-router-dom';
 
 export default function Home() {
 
+
     const navigate = useNavigate();
     const [items, setItems] = useState();
 
@@ -19,6 +20,7 @@ export default function Home() {
 	    		}, 500);
 	    	}
 	    	hidePreloader();
+            
 	    	let auth = getCookie("auth");
             function getCookie(cName) {
                 const name = cName + "=";
@@ -39,6 +41,9 @@ export default function Home() {
 	    				const data= JSON.stringify(result);
                     	var json = JSON.parse(data);
                     	const username = json["username"];
+                        // For chat
+                        window.localStorage.setItem('exportedUsername', username);
+                        //
 	    				const email = json["email"];
 	    				const avatar = json["avatar"];
                         const reviews = json["reviews"];
@@ -48,9 +53,11 @@ export default function Home() {
                         }
                         const mean = Math.floor(tot/reviews.length);
                         var j;
+                        try{
                         for (j=1; j<=mean; j++) {
                             document.getElementById(j).className += " checked";
                         }
+                        }catch{console.log("oooooooooo");}
 	    				document.getElementById("nameTv").innerHTML=username;
                         $.ajax({
                             type: "POST",
@@ -69,10 +76,13 @@ export default function Home() {
             	        //alert(errorThrown);
             	    }
             	  });
+                  
+
 	    	} else navigate('/');
      }, []);
 
     return (
+        
     <div data-spy="scroll" data-target=".fixed-top">
 
         <Navbar />
@@ -108,5 +118,8 @@ export default function Home() {
          {items && <ActivityCard items={items} type="home" />}
 
     </div>
+
+    
+    
     );
 };

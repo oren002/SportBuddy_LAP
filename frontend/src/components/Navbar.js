@@ -59,9 +59,6 @@ function Navbar() {
                     <Link className="nav-link page-scroll mt-2" to="/searchActivities">SEARCH ACTIVITIES</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link page-scroll mt-2" to="/profile">PROFILE</Link>
-                  </li>
-                  <li className="nav-item">
                     <Link className="nav-link page-scroll mt-2" to="/favorites">FAVORITES</Link>
                   </li>
                   <span className="nav-item">

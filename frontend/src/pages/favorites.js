@@ -48,9 +48,11 @@ const Favorites = () => {
                         }
                         const mean = Math.floor(tot/reviews.length);
                         var j;
+                        try{
                         for (j=1; j<=mean; j++) {
                             document.getElementById(j).className += " checked";
                         }
+                    }catch{console.log("ooo");}
 	    				document.getElementById("nameTv").innerHTML=username;
                         $.ajax({
                             type: "POST",
@@ -62,6 +64,7 @@ const Favorites = () => {
 
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
+                                console.log("eee");
                                 //alert(errorThrown);
                             }
                           });
@@ -69,6 +72,7 @@ const Favorites = () => {
             	    },
             	    error: function(jqXHR, textStatus, errorThrown) {
             	        //alert(errorThrown);
+                        console.log("eee");
             	    }
             	  });
 	    	} else navigate('/'); 

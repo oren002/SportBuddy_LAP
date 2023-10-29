@@ -90,7 +90,8 @@ const getAgenda = async (req, res, next) => {
 
 
         // Fetch activities where the id is in the user's Favorites array
-        const favoriteActivities = await Activity.find({ _id: { $in: user.Favorites } });
+        const currentDate = new Date();
+        const favoriteActivities = await Activity.find({ _id: { $in: user.Favorites }, date: { $gt: currentDate.toISOString() } });
 
         if (!favoriteActivities || favoriteActivities.length === 0) {
             console.log('No favorite activities found for user:', username);

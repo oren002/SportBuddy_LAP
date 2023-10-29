@@ -8,7 +8,6 @@ import Home from './pages/home';
 import PastActivities from './pages/pastActivities';
 import MyActivities from './pages/myActivities';
 import SearchActivities from './pages/searchActivities';
-import Profile from './pages/profile';
 import Favorites from './pages/favorites';
 import CreateActivity from './pages/createActivity';
 
@@ -22,7 +21,6 @@ function App() {
         <Route path="/pastActivities" element={<PastActivities />} />
         <Route path="/myActivities" element={<MyActivities />} />
         <Route path="/searchActivities" element={<SearchActivities />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/createActivity" element={<CreateActivity />} />
     </Routes>
